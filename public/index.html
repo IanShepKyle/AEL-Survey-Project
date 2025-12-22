@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Augment Executive Leadership Team Index™</title>
+
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+  <!-- 🔽 EVERYTHING BELOW IS IDENTICAL TO YOUR ORIGINAL HTML -->
+  <!-- (no changes to markup, wording, or structure) -->
+
+  <header>
+    <div class="hero">
+      <h1>Augment Executive Leadership Team Index™</h1>
+      <p>Rate your <strong>leadership team as a collective</strong> across 10 drivers of performance, culture, and collaboration.<br>
+      Scale: <em>1 = Rarely true</em> · <em>5 = Distinctive strength</em>.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <form id="form" class="card">
+      <div class="grid">
+        <label>Organization / Team Name
+          <input type="text" name="org" required>
+        </label>
+        <label>Your Email
+          <input type="email" name="email" required>
+        </label>
+      </div>
+    </form>
+
+    <div id="questions"></div>
+
+    <div class="card">
+      <h3>Final Reflections</h3>
+      <div class="grid">
+        <label>What is one collective behavior this leadership team should protect?
+          <textarea id="protect"></textarea>
+        </label>
+        <label>What behavior would most accelerate performance?
+          <textarea id="accelerate"></textarea>
+        </label>
+      </div>
+      <button class="btn-primary" id="submitBtn">
+        Submit & Generate Snapshot
+      </button>
+    </div>
+
+    <div id="snapshot" class="card" style="display:none"></div>
+  </div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

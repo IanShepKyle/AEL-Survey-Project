@@ -1,0 +1,41 @@
+    :root{
+      --accent:#6A2FC3; /* Augment purple-ish */
+      --accent2:#3F2E8C;
+      --bg:#f7f7fb;
+      --card:#ffffff;
+      --text:#1f2330;
+      --muted:#60657a;
+      --ok:#1f9254;
+      --warn:#ad7a00;
+      --risk:#b22234;
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;}
+    .wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px;}
+    header{background:linear-gradient(120deg,rgba(106,47,195,.12),rgba(63,46,140,.06));padding:32px 0 12px;margin: -32px -20px 24px -20px;}
+    .hero{max-width:960px;margin:0 auto;padding:0 20px 10px;}
+    .hero h1{font-size:34px;margin:8px 0 6px 0;letter-spacing:.3px}
+    .hero p{color:var(--muted);margin:6px 0 16px 0}
+    .card{background:var(--card);border-radius:14px;box-shadow:0 6px 22px rgba(16,20,40,.06);padding:20px;margin:14px 0}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width:700px){.grid{grid-template-columns:1fr}}
+    h2{font-size:22px;margin:6px 0 12px 0}
+    h3{font-size:18px;margin:14px 0 6px 0}
+    .dim-title{display:flex;align-items:center;gap:10px}
+    .pill{font-size:12px;background:#efecff;color:var(--accent2);padding:4px 10px;border-radius:999px}
+    .likert{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 16px 0}
+    .likert .item{padding:12px;border:1px solid #e9e9f3;border-radius:10px;width:100%}
+    .scale{display:flex;align-items:center;gap:8px;margin-top:6px}
+    .scale label{display:flex;flex-direction:column;align-items:center;font-size:12px;color:var(--muted)}
+    .scale input{margin:2px}
+    textarea{width:100%;min-height:70px;border:1px solid #e5e5f2;border-radius:10px;padding:10px;font:inherit}
+    .btn-primary{background:var(--accent);border:none;color:white;padding:14px 18px;border-radius:12px;font-weight:600;cursor:pointer}
+    .btn-primary:hover{filter:brightness(.98)}
+    .muted{color:var(--muted)}
+    .table{width:100%;border-collapse:collapse}
+    .table th,.table td{border-bottom:1px solid #eee;padding:10px;text-align:left}
+    .badge{padding:2px 8px;border-radius:999px;color:white;font-size:12px}
+    .b-green{background:var(--ok)} .b-yellow{background:#c78a00} .b-orange{background:#e07a00} .b-red{background:#c2362b}
+    .notice{background:#fff8e6;border:1px solid #ffe7b3;padding:12px;border-radius:10px}
+    .right{float:right}
+    .footer-note{font-size:12px;color:var(--muted)}
+    .sr{position:absolute;left:-9999px}
