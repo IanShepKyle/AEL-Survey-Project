@@ -132,6 +132,9 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
   qualitative['protect'] = document.getElementById('protect').value.trim();
   qualitative['accelerate'] = document.getElementById('accelerate').value.trim();
 
+  const results = score({ ratings });
+  renderSnapshot(org, results);
+
   // Send to server
   try {
     const res = await fetch('/send-email', {
@@ -145,4 +148,18 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
   } catch(err) {
     alert('Error: ' + err.message);
   }
+});
+
+const payload = {
+  org,
+  email,
+  ratings,
+  qualitative,
+  results
+};
+
+await fetch('/send-report', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(payload)
 });
