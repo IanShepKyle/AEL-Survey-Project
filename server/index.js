@@ -171,11 +171,13 @@ function generatePDFReport(org, email, ratings, qualitative, results) {
     // Table rows
     let y = doc.y;
     const nameByKey = Object.fromEntries(DIMENSIONS.map(d => [d.key, d.title]));
+    const entries = Object.entries(results.dimScores);
     
-    Object.entries(results.dimScores).forEach(([key, score], index) => {
+    entries.forEach(([key, score], index) => {
       const band = results.band(score);
       
-      if (index > 0 && index % 10 === 0) {
+      // Check if we need a new page before adding content
+      if (y > 700) {  // Leave some room for footer
         doc.addPage();
         y = 50;
       }
@@ -192,14 +194,19 @@ function generatePDFReport(org, email, ratings, qualitative, results) {
          .text(band.label, col3, y);
       
       y += 25;
-      doc.y = y;
     });
     
+    // Reset y position for next content
+    doc.y = y;
     doc.moveDown(2);
 
     // Qualitative Responses Section
     if (qualitative && Object.keys(qualitative).length > 0) {
-      doc.addPage();
+      // Add page if needed
+      if (doc.y > 700) {
+        doc.addPage();
+      }
+      
       doc.fillColor('#1a237e')
          .fontSize(16)
          .font('Helvetica-Bold')
@@ -207,14 +214,34 @@ function generatePDFReport(org, email, ratings, qualitative, results) {
       
       doc.moveDown(1);
       
+      let qy = doc.y;
       Object.entries(qualitative).forEach(([question, answer], index) => {
         if (answer && answer.trim()) {
+          // Check if we need a new page
+          if (qy > 700) {
+            doc.addPage();
+            qy = 50;
+          }
+          
           doc.fillColor('#1a237e')
              .fontSize(12)
              .font('Helvetica-Bold')
-             .text(`Q${index + 1}: ${question}`);
+             .text(`Q${index + 1}: ${question}`, { continued: false });
           
-          doc.moveDown(0.2);
+          qy = doc.y; // Update y position
+          
+          // Measure answer height
+          const answerHeight = doc.heightOfString(answer, {
+            width: 500,
+            lineGap: 2
+          });
+          
+          // Check if answer fits on current page
+          if (qy + answerHeight > 750) {
+            doc.addPage();
+            qy = 50;
+          }
+          
           doc.fillColor('#333')
              .fontSize(11)
              .font('Helvetica')
@@ -224,6 +251,7 @@ function generatePDFReport(org, email, ratings, qualitative, results) {
                lineGap: 2
              });
           
+          qy = doc.y + 15; // Update y position for next question
           doc.moveDown(1);
         }
       });
@@ -231,7 +259,11 @@ function generatePDFReport(org, email, ratings, qualitative, results) {
 
     // Raw Ratings Data
     if (ratings && Object.keys(ratings).length > 0) {
-      doc.addPage();
+      // Add page if needed
+      if (doc.y > 700) {
+        doc.addPage();
+      }
+      
       doc.fillColor('#1a237e')
          .fontSize(16)
          .font('Helvetica-Bold')
@@ -242,32 +274,43 @@ function generatePDFReport(org, email, ratings, qualitative, results) {
          .fontSize(10)
          .font('Helvetica');
       
+      let ry = doc.y;
       Object.entries(ratings).forEach(([key, value], index) => {
-        const yPos = 100 + (index * 15);
-        
-        if (yPos > 750) {
+        // Check if we need a new page
+        if (ry > 750) {
           doc.addPage();
-          yPos = 50;
+          ry = 50;
         }
         
-        doc.text(`${key}:`, 50, yPos);
-        doc.text(`${value}`, 250, yPos);
+        doc.text(`${key}:`, 50, ry);
+        doc.text(`${value}`, 250, ry);
+        
+        ry += 15;
       });
     }
 
-    // Footer on each page
-    const totalPages = doc.bufferedPageRange().count;
-    for (let i = 0; i < totalPages; i++) {
-      doc.switchToPage(i);
-      doc.fillColor('#666')
-         .fontSize(8)
-         .font('Helvetica')
-         .text(
-           `Page ${i + 1} of ${totalPages} • Augment Leadership Survey • Confidential`,
-           50,
-           doc.page.height - 30,
-           { align: 'center' }
-         );
+    // IMPORTANT: Get page range BEFORE ending the document
+    const pageRange = doc.bufferedPageRange();
+    const totalPages = pageRange ? pageRange.count : 0;
+    
+    if (totalPages > 0) {
+      // Add footer to each page
+      for (let i = 0; i < totalPages; i++) {
+        try {
+          doc.switchToPage(i);
+          doc.fillColor('#666')
+             .fontSize(8)
+             .font('Helvetica')
+             .text(
+               `Page ${i + 1} of ${totalPages} • Augment Leadership Survey • Confidential`,
+               50,
+               doc.page.height - 30,
+               { align: 'center' }
+             );
+        } catch (err) {
+          console.warn(`Could not add footer to page ${i}:`, err.message);
+        }
+      }
     }
 
     doc.end();
