@@ -101,7 +101,7 @@ function generateEmailHTML(org, results) {
   }).join('');
 
   return `
-    <h1>Augment Leadership Survey</h1>
+    <h1>Augment High Performance Index</h1>
     <h2>${org}</h2>
     <h3>
       Overall Score: ${results.overall.toFixed(2)}
