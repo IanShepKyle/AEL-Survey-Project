@@ -140,3 +140,6 @@ p {
     margin: -24px -16px 20px -16px;
   }
 }
+body { overflow-x: hidden; }
+* { overflow-wrap: break-word; }
+p, .hero p { word-break: break-word; }
