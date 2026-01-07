@@ -18,6 +18,20 @@
     .card{background:var(--card);border-radius:14px;box-shadow:0 6px 22px rgba(16,20,40,.06);padding:20px;margin:14px 0}
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     @media (max-width:700px){.grid{grid-template-columns:1fr}}
+        @media (max-width: 600px) {
+      .wrap {
+        padding: 24px 28px 80px;
+      }
+
+      .hero {
+        padding: 0 28px 10px;
+      }
+
+      .container {
+        padding: 0 28px;
+      }
+    }
+
     h2{font-size:22px;margin:6px 0 12px 0}
     h3{font-size:18px;margin:14px 0 6px 0}
     .dim-title{display:flex;align-items:center;gap:10px}
@@ -40,5 +54,18 @@
     .footer-note{font-size:12px;color:var(--muted)}
     .sr{position:absolute;left:-9999px}
     .container{max-width:1200px;margin:0 auto;padding:0 20px;}
+    @media (max-width: 600px) {
+      .wrap {
+        padding: 24px 28px 80px;
+      }
+
+      .hero {
+        padding: 0 28px 10px;
+      }
+
+      .container {
+        padding: 0 28px;
+      }
+    }
 
     
