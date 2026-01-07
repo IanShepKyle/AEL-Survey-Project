@@ -39,6 +39,6 @@
     .right{float:right}
     .footer-note{font-size:12px;color:var(--muted)}
     .sr{position:absolute;left:-9999px}
-    .container{max-width:960px;margin:0 auto;padding:0 20px;}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px;}
 
     
